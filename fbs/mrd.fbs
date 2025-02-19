@@ -1,12 +1,13 @@
 
 namespace MRD;
-enum types:byte {server=0,client=1}
-enum actions:byte {getPage=0}
+enum types:byte {middle=0,server=1,client=2}
+enum actions:byte {connect=0}
 table message {
-    type:types;
+    from:types;
+    to:types;
     action:actions;
     data:string;
 }
-root_type MRD;
-file_identifier "MRDE";
-file_extension "mrd";
+root_type message;
+file_identifier "MRD1";
+file_extension "mrd1";
