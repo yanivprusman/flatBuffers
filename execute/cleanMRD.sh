@@ -1,0 +1,5 @@
+NAME_SPACE=MRD
+CLEAN_OUT_PUT_DIR=../output/$NAME_SPACE
+if [ -d $CLEAN_OUT_PUT_DIR ]; then
+    rm -r $CLEAN_OUT_PUT_DIR
+fi

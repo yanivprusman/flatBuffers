@@ -1,0 +1,4 @@
+namespace MRD;
+enum types:byte {middle=0,server=1,client=2}
+enum actions:byte {connect=0}
+enum status:byte {pending=0,connected=1,disconnected=2}

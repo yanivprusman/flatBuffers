@@ -1,0 +1,12 @@
+namespace MRD;
+include "enums.fbs";
+
+table Connections {
+    servers:[connectionStatus];
+    clients:[types];
+    action:actions;
+    data:string;
+}
+root_type Connections;
+file_identifier "MRD2";
+file_extension "mrd2";
