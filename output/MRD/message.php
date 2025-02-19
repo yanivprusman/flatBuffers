@@ -8,37 +8,37 @@ use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
 use \Google\FlatBuffers\FlatBufferBuilder;
 
-class MRD extends Table
+class message extends Table
 {
     /**
      * @param ByteBuffer $bb
-     * @return MRD
+     * @return message
      */
-    public static function getRootAsMRD(ByteBuffer $bb)
+    public static function getRootAsmessage(ByteBuffer $bb)
     {
-        $obj = new MRD();
+        $obj = new message();
         return ($obj->init($bb->getInt($bb->getPosition()) + $bb->getPosition(), $bb));
     }
 
-    public static function MRDIdentifier()
+    public static function messageIdentifier()
     {
-        return "MRDE";
+        return "MRD1";
     }
 
-    public static function MRDBufferHasIdentifier(ByteBuffer $buf)
+    public static function messageBufferHasIdentifier(ByteBuffer $buf)
     {
-        return self::__has_identifier($buf, self::MRDIdentifier());
+        return self::__has_identifier($buf, self::messageIdentifier());
     }
 
-    public static function MRDExtension()
+    public static function messageExtension()
     {
-        return "mrd";
+        return "mrd1";
     }
 
     /**
      * @param int $_i offset
      * @param ByteBuffer $_bb
-     * @return MRD
+     * @return message
      **/
     public function init($_i, ByteBuffer $_bb)
     {
@@ -50,10 +50,19 @@ class MRD extends Table
     /**
      * @return sbyte
      */
-    public function getType()
+    public function getFrom()
     {
         $o = $this->__offset(4);
-        return $o != 0 ? $this->bb->getSbyte($o + $this->bb_pos) : \MRD\types::server;
+        return $o != 0 ? $this->bb->getSbyte($o + $this->bb_pos) : \MRD\types::middle;
+    }
+
+    /**
+     * @return sbyte
+     */
+    public function getTo()
+    {
+        $o = $this->__offset(6);
+        return $o != 0 ? $this->bb->getSbyte($o + $this->bb_pos) : \MRD\types::middle;
     }
 
     /**
@@ -61,13 +70,13 @@ class MRD extends Table
      */
     public function getAction()
     {
-        $o = $this->__offset(6);
-        return $o != 0 ? $this->bb->getSbyte($o + $this->bb_pos) : \MRD\actions::getPage;
+        $o = $this->__offset(8);
+        return $o != 0 ? $this->bb->getSbyte($o + $this->bb_pos) : \MRD\actions::connect;
     }
 
     public function getData()
     {
-        $o = $this->__offset(8);
+        $o = $this->__offset(10);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
@@ -75,19 +84,20 @@ class MRD extends Table
      * @param FlatBufferBuilder $builder
      * @return void
      */
-    public static function startMRD(FlatBufferBuilder $builder)
+    public static function startmessage(FlatBufferBuilder $builder)
     {
-        $builder->StartObject(3);
+        $builder->StartObject(4);
     }
 
     /**
      * @param FlatBufferBuilder $builder
-     * @return MRD
+     * @return message
      */
-    public static function createMRD(FlatBufferBuilder $builder, $type, $action, $data)
+    public static function createmessage(FlatBufferBuilder $builder, $from, $to, $action, $data)
     {
-        $builder->startObject(3);
-        self::addType($builder, $type);
+        $builder->startObject(4);
+        self::addFrom($builder, $from);
+        self::addTo($builder, $to);
         self::addAction($builder, $action);
         self::addData($builder, $data);
         $o = $builder->endObject();
@@ -99,9 +109,19 @@ class MRD extends Table
      * @param sbyte
      * @return void
      */
-    public static function addType(FlatBufferBuilder $builder, $type)
+    public static function addFrom(FlatBufferBuilder $builder, $from)
     {
-        $builder->addSbyteX(0, $type, 0);
+        $builder->addSbyteX(0, $from, 0);
+    }
+
+    /**
+     * @param FlatBufferBuilder $builder
+     * @param sbyte
+     * @return void
+     */
+    public static function addTo(FlatBufferBuilder $builder, $to)
+    {
+        $builder->addSbyteX(1, $to, 0);
     }
 
     /**
@@ -111,7 +131,7 @@ class MRD extends Table
      */
     public static function addAction(FlatBufferBuilder $builder, $action)
     {
-        $builder->addSbyteX(1, $action, 0);
+        $builder->addSbyteX(2, $action, 0);
     }
 
     /**
@@ -121,21 +141,21 @@ class MRD extends Table
      */
     public static function addData(FlatBufferBuilder $builder, $data)
     {
-        $builder->addOffsetX(2, $data, 0);
+        $builder->addOffsetX(3, $data, 0);
     }
 
     /**
      * @param FlatBufferBuilder $builder
      * @return int table offset
      */
-    public static function endMRD(FlatBufferBuilder $builder)
+    public static function endmessage(FlatBufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;
     }
 
-    public static function finishMRDBuffer(FlatBufferBuilder $builder, $offset)
+    public static function finishmessageBuffer(FlatBufferBuilder $builder, $offset)
     {
-        $builder->finish($offset, "MRDE");
+        $builder->finish($offset, "MRD1");
     }
 }

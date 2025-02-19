@@ -5,10 +5,10 @@ namespace MRD;
 
 class actions
 {
-    const getPage = 0;
+    const connect = 0;
 
     private static $names = array(
-        actions::getPage=>"getPage",
+        actions::connect=>"connect",
     );
 
     public static function Name($e)

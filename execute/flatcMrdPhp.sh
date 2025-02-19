@@ -1,0 +1,1 @@
+flatc --php -o ../output ../fbs/mrd/mrd.fbs

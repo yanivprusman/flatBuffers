@@ -1,0 +1,11 @@
+include "mrd.fbs";
+namespace MRD;
+table message2 {
+    from:types;
+    to:types;
+    action:actions;
+    data:string;
+}
+root_type message2;
+file_identifier "MRD2";
+file_extension "mrd2";
