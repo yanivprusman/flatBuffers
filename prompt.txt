@@ -1,0 +1,22 @@
+prompt
+
+--js is not supported in flatbuffers.
+the documentation says to use --ts and convert to js
+this is my 101.fbs file:
+namespace MRD;
+table MyTable {
+    my_ata:string;
+}
+root_type MyTable;
+file_identifier "MRD2";
+file_extension "mrd2";
+here are the file and folder structure that was generated:
+├── output
+│   ├── 101.ts
+│   ├── mrd
+│   │   └── my-table.ts
+│   └── mrd.ts
+i have a few questions:
+for one: why are the file scattered like this?
+
+

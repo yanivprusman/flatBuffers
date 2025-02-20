@@ -15,106 +15,106 @@ static_assert(FLATBUFFERS_VERSION_MAJOR == 25 &&
 
 namespace MRD {
 
-struct TheTable;
-struct TheTableBuilder;
+struct MyTable;
+struct MyTableBuilder;
 
-struct TheTable FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
-  typedef TheTableBuilder Builder;
+struct MyTable FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
+  typedef MyTableBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
-    VT_DATA = 4
+    VT_MY_ATA = 4
   };
-  const ::flatbuffers::String *data() const {
-    return GetPointer<const ::flatbuffers::String *>(VT_DATA);
+  const ::flatbuffers::String *my_ata() const {
+    return GetPointer<const ::flatbuffers::String *>(VT_MY_ATA);
   }
   bool Verify(::flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyOffset(verifier, VT_DATA) &&
-           verifier.VerifyString(data()) &&
+           VerifyOffset(verifier, VT_MY_ATA) &&
+           verifier.VerifyString(my_ata()) &&
            verifier.EndTable();
   }
 };
 
-struct TheTableBuilder {
-  typedef TheTable Table;
+struct MyTableBuilder {
+  typedef MyTable Table;
   ::flatbuffers::FlatBufferBuilder &fbb_;
   ::flatbuffers::uoffset_t start_;
-  void add_data(::flatbuffers::Offset<::flatbuffers::String> data) {
-    fbb_.AddOffset(TheTable::VT_DATA, data);
+  void add_my_ata(::flatbuffers::Offset<::flatbuffers::String> my_ata) {
+    fbb_.AddOffset(MyTable::VT_MY_ATA, my_ata);
   }
-  explicit TheTableBuilder(::flatbuffers::FlatBufferBuilder &_fbb)
+  explicit MyTableBuilder(::flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  ::flatbuffers::Offset<TheTable> Finish() {
+  ::flatbuffers::Offset<MyTable> Finish() {
     const auto end = fbb_.EndTable(start_);
-    auto o = ::flatbuffers::Offset<TheTable>(end);
+    auto o = ::flatbuffers::Offset<MyTable>(end);
     return o;
   }
 };
 
-inline ::flatbuffers::Offset<TheTable> CreateTheTable(
+inline ::flatbuffers::Offset<MyTable> CreateMyTable(
     ::flatbuffers::FlatBufferBuilder &_fbb,
-    ::flatbuffers::Offset<::flatbuffers::String> data = 0) {
-  TheTableBuilder builder_(_fbb);
-  builder_.add_data(data);
+    ::flatbuffers::Offset<::flatbuffers::String> my_ata = 0) {
+  MyTableBuilder builder_(_fbb);
+  builder_.add_my_ata(my_ata);
   return builder_.Finish();
 }
 
-inline ::flatbuffers::Offset<TheTable> CreateTheTableDirect(
+inline ::flatbuffers::Offset<MyTable> CreateMyTableDirect(
     ::flatbuffers::FlatBufferBuilder &_fbb,
-    const char *data = nullptr) {
-  auto data__ = data ? _fbb.CreateString(data) : 0;
-  return MRD::CreateTheTable(
+    const char *my_ata = nullptr) {
+  auto my_ata__ = my_ata ? _fbb.CreateString(my_ata) : 0;
+  return MRD::CreateMyTable(
       _fbb,
-      data__);
+      my_ata__);
 }
 
-inline const MRD::TheTable *GetTheTable(const void *buf) {
-  return ::flatbuffers::GetRoot<MRD::TheTable>(buf);
+inline const MRD::MyTable *GetMyTable(const void *buf) {
+  return ::flatbuffers::GetRoot<MRD::MyTable>(buf);
 }
 
-inline const MRD::TheTable *GetSizePrefixedTheTable(const void *buf) {
-  return ::flatbuffers::GetSizePrefixedRoot<MRD::TheTable>(buf);
+inline const MRD::MyTable *GetSizePrefixedMyTable(const void *buf) {
+  return ::flatbuffers::GetSizePrefixedRoot<MRD::MyTable>(buf);
 }
 
-inline const char *TheTableIdentifier() {
+inline const char *MyTableIdentifier() {
   return "MRD2";
 }
 
-inline bool TheTableBufferHasIdentifier(const void *buf) {
+inline bool MyTableBufferHasIdentifier(const void *buf) {
   return ::flatbuffers::BufferHasIdentifier(
-      buf, TheTableIdentifier());
+      buf, MyTableIdentifier());
 }
 
-inline bool SizePrefixedTheTableBufferHasIdentifier(const void *buf) {
+inline bool SizePrefixedMyTableBufferHasIdentifier(const void *buf) {
   return ::flatbuffers::BufferHasIdentifier(
-      buf, TheTableIdentifier(), true);
+      buf, MyTableIdentifier(), true);
 }
 
-inline bool VerifyTheTableBuffer(
+inline bool VerifyMyTableBuffer(
     ::flatbuffers::Verifier &verifier) {
-  return verifier.VerifyBuffer<MRD::TheTable>(TheTableIdentifier());
+  return verifier.VerifyBuffer<MRD::MyTable>(MyTableIdentifier());
 }
 
-inline bool VerifySizePrefixedTheTableBuffer(
+inline bool VerifySizePrefixedMyTableBuffer(
     ::flatbuffers::Verifier &verifier) {
-  return verifier.VerifySizePrefixedBuffer<MRD::TheTable>(TheTableIdentifier());
+  return verifier.VerifySizePrefixedBuffer<MRD::MyTable>(MyTableIdentifier());
 }
 
-inline const char *TheTableExtension() {
+inline const char *MyTableExtension() {
   return "mrd2";
 }
 
-inline void FinishTheTableBuffer(
+inline void FinishMyTableBuffer(
     ::flatbuffers::FlatBufferBuilder &fbb,
-    ::flatbuffers::Offset<MRD::TheTable> root) {
-  fbb.Finish(root, TheTableIdentifier());
+    ::flatbuffers::Offset<MRD::MyTable> root) {
+  fbb.Finish(root, MyTableIdentifier());
 }
 
-inline void FinishSizePrefixedTheTableBuffer(
+inline void FinishSizePrefixedMyTableBuffer(
     ::flatbuffers::FlatBufferBuilder &fbb,
-    ::flatbuffers::Offset<MRD::TheTable> root) {
-  fbb.FinishSizePrefixed(root, TheTableIdentifier());
+    ::flatbuffers::Offset<MRD::MyTable> root) {
+  fbb.FinishSizePrefixed(root, MyTableIdentifier());
 }
 
 }  // namespace MRD

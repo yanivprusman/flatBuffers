@@ -8,29 +8,29 @@ use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
 use \Google\FlatBuffers\FlatBufferBuilder;
 
-class TheTable extends Table
+class MyTable extends Table
 {
     /**
      * @param ByteBuffer $bb
-     * @return TheTable
+     * @return MyTable
      */
-    public static function getRootAsTheTable(ByteBuffer $bb)
+    public static function getRootAsMyTable(ByteBuffer $bb)
     {
-        $obj = new TheTable();
+        $obj = new MyTable();
         return ($obj->init($bb->getInt($bb->getPosition()) + $bb->getPosition(), $bb));
     }
 
-    public static function TheTableIdentifier()
+    public static function MyTableIdentifier()
     {
         return "MRD2";
     }
 
-    public static function TheTableBufferHasIdentifier(ByteBuffer $buf)
+    public static function MyTableBufferHasIdentifier(ByteBuffer $buf)
     {
-        return self::__has_identifier($buf, self::TheTableIdentifier());
+        return self::__has_identifier($buf, self::MyTableIdentifier());
     }
 
-    public static function TheTableExtension()
+    public static function MyTableExtension()
     {
         return "mrd2";
     }
@@ -38,7 +38,7 @@ class TheTable extends Table
     /**
      * @param int $_i offset
      * @param ByteBuffer $_bb
-     * @return TheTable
+     * @return MyTable
      **/
     public function init($_i, ByteBuffer $_bb)
     {
@@ -47,7 +47,7 @@ class TheTable extends Table
         return $this;
     }
 
-    public function getData()
+    public function getMyAta()
     {
         $o = $this->__offset(4);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
@@ -57,19 +57,19 @@ class TheTable extends Table
      * @param FlatBufferBuilder $builder
      * @return void
      */
-    public static function startTheTable(FlatBufferBuilder $builder)
+    public static function startMyTable(FlatBufferBuilder $builder)
     {
         $builder->StartObject(1);
     }
 
     /**
      * @param FlatBufferBuilder $builder
-     * @return TheTable
+     * @return MyTable
      */
-    public static function createTheTable(FlatBufferBuilder $builder, $data)
+    public static function createMyTable(FlatBufferBuilder $builder, $my_ata)
     {
         $builder->startObject(1);
-        self::addData($builder, $data);
+        self::addMyAta($builder, $my_ata);
         $o = $builder->endObject();
         return $o;
     }
@@ -79,22 +79,22 @@ class TheTable extends Table
      * @param StringOffset
      * @return void
      */
-    public static function addData(FlatBufferBuilder $builder, $data)
+    public static function addMyAta(FlatBufferBuilder $builder, $myAta)
     {
-        $builder->addOffsetX(0, $data, 0);
+        $builder->addOffsetX(0, $myAta, 0);
     }
 
     /**
      * @param FlatBufferBuilder $builder
      * @return int table offset
      */
-    public static function endTheTable(FlatBufferBuilder $builder)
+    public static function endMyTable(FlatBufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;
     }
 
-    public static function finishTheTableBuffer(FlatBufferBuilder $builder, $offset)
+    public static function finishMyTableBuffer(FlatBufferBuilder $builder, $offset)
     {
         $builder->finish($offset, "MRD2");
     }

@@ -16,6 +16,7 @@ if [ $1 ]; then
     fi
     flatc $1 -o $FIRST_OUT_PUT_DIR $SOURCE_FILES
     ARG_WITHOUT_DASHES=$(echo $1 | sed 's/^-*//')
+    EXTENSION=$ARG_WITHOUT_DASHES
     if [ $ARG_WITHOUT_DASHES == cpp ]; then
         EXTENSION=h
         OUT_PUT_DIR=$FIRST_OUT_PUT_DIR/$NAME_SPACE/$EXTENSION
@@ -29,8 +30,13 @@ if [ $1 ]; then
             base_name=$(basename "$file" .$EXTENSION)
             mv "$file" "$OUT_PUT_DIR/${base_name}.$NAME_SPACE.schema.json"
         done
+    elif [ $ARG_WITHOUT_DASHES == ts ]; then
+        OUT_PUT_DIR=$FIRST_OUT_PUT_DIR/$NAME_SPACE/$EXTENSION
+        mkdir -p $OUT_PUT_DIR
+        mv $FIRST_OUT_PUT_DIR/*.$EXTENSION $OUT_PUT_DIR
+        LOWER_CASE_NAME_SPACE=${NAME_SPACE,,}
+        mv $FIRST_OUT_PUT_DIR/$LOWER_CASE_NAME_SPACE $OUT_PUT_DIR
     else 
-        EXTENSION=$ARG_WITHOUT_DASHES
         OUT_PUT_DIR=$FIRST_OUT_PUT_DIR/$NAME_SPACE/$EXTENSION
         mkdir -p $OUT_PUT_DIR
         mv $FIRST_OUT_PUT_DIR/$NAME_SPACE/*.$EXTENSION $OUT_PUT_DIR
