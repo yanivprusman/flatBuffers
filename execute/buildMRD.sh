@@ -1,7 +1,9 @@
 NAME_SPACE=MRD
 if [ -n "$BASH_SOURCE" ]; then
+    SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
     SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 else
+    SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
     SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 fi
 FIRST_OUT_PUT_DIR=$SCRIPT_DIR/../output
@@ -12,6 +14,8 @@ if [ $1 ]; then
         :
     else
         echo "No .fbs files found in ${SOURCE_DIR}"
+        echo "No .fbs files found in ${SOURCE_FILES}"
+        echo "No .fbs files found in ${SCRIPT_DIR}"
         return
     fi
     flatc $1 -o $FIRST_OUT_PUT_DIR $SOURCE_FILES

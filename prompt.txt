@@ -1,22 +1,72 @@
 prompt
 
---js is not supported in flatbuffers.
-the documentation says to use --ts and convert to js
-this is my 101.fbs file:
-namespace MRD;
-table MyTable {
-    my_ata:string;
+this is my folder structure:
+└── ts
+    ├── 101.ts
+    ├── mrd
+    │   └── my-table.ts
+    └── mrd.ts
+find . -name "*.ts" -exec sh -c '
+    echo "File: {}"
+    cat {} | \
+    sed '"'"'s|//.*$||g'"'"' | \
+    sed '"'"':a;N;$!ba;s|/\*.*\*/||g'"'"' | \
+    sed '"'"'/^[[:space:]]*$/d'"'"'
+' \; > out.txt
+File: ./101.ts
+export * as MRD from './mrd.js';
+File: ./mrd.ts
+export { MyTable } from './mrd/my-table.js';
+File: ./mrd/my-table.ts
+import * as flatbuffers from 'flatbuffers';
+export class MyTable {
+  bb: flatbuffers.ByteBuffer|null = null;
+  bb_pos = 0;
+  __init(i:number, bb:flatbuffers.ByteBuffer):MyTable {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
 }
-root_type MyTable;
-file_identifier "MRD2";
-file_extension "mrd2";
-here are the file and folder structure that was generated:
-├── output
-│   ├── 101.ts
-│   ├── mrd
-│   │   └── my-table.ts
-│   └── mrd.ts
-i have a few questions:
-for one: why are the file scattered like this?
+static getRootAsMyTable(bb:flatbuffers.ByteBuffer, obj?:MyTable):MyTable {
+  return (obj || new MyTable()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+}
+static getSizePrefixedRootAsMyTable(bb:flatbuffers.ByteBuffer, obj?:MyTable):MyTable {
+  bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
+  return (obj || new MyTable()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+}
+static bufferHasIdentifier(bb:flatbuffers.ByteBuffer):boolean {
+  return bb.__has_identifier('MRD2');
+}
+myAta():string|null
+myAta(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+myAta(optionalEncoding?:any):string|Uint8Array|null {
+  const offset = this.bb!.__offset(this.bb_pos, 4);
+  return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
+}
+static startMyTable(builder:flatbuffers.Builder) {
+  builder.startObject(1);
+}
+static addMyAta(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(0, myAtaOffset, 0);
+}
+static endMyTable(builder:flatbuffers.Builder):flatbuffers.Offset {
+  const offset = builder.endObject();
+  return offset;
+}
+static finishMyTableBuffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+  builder.finish(offset, 'MRD2');
+}
+static finishSizePrefixedMyTableBuffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+  builder.finish(offset, 'MRD2', true);
+}
+static createMyTable(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset):flatbuffers.Offset {
+  MyTable.startMyTable(builder);
+  MyTable.addMyAta(builder, myAtaOffset);
+  return MyTable.endMyTable(builder);
+}
+}
+i need your help to produce two builds:
+1- a js file that i can use in a browser
+2- a js file that i can use in a node
 
 

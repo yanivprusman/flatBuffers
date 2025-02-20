@@ -1,0 +1,13 @@
+{
+    "name": "flatbuffers-demo",
+    "version": "1.0.0",
+    "scripts": {
+      "build:browser": "tsc -p tsconfig.browser.json",
+      "build:node": "tsc -p tsconfig.node.json",
+      "build": "npm run build:browser && npm run build:node"
+    },
+    "devDependencies": {
+      "typescript": "^5.0.0",
+      "flatbuffers": "^23.5.26"
+    }
+}
