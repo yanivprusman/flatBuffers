@@ -1,0 +1,113 @@
+// connection_types.fbs
+namespace MyRemoteDevice;
+
+enum ConnectionType : byte {
+  Device = 0,
+  Client = 1
+}
+
+enum ConnectionStatus : byte {
+  Success = 0,
+  DeviceNotFound = 1,
+  AlreadyRegistered = 2,
+  InvalidType = 3,
+  Error = 4
+}
+
+table ConnectionCredentials1 {
+  device_identifier:string;
+  password:string;
+  type:ConnectionType;
+  timestamp:int64;  // Unix timestamp for connection attempt
+}
+
+table ConnectionResponse {
+  status:ConnectionStatus;
+  message:string;
+  resource_id:int64;  // Server-assigned ID on successful connection
+}
+
+// device_types.fbs
+namespace MyRemoteDevice;
+
+table Device {
+  device_identifier:string;
+  resource_id:int64;
+  connected_at:int64;  // Unix timestamp
+  last_seen:int64;     // Unix timestamp of last activity
+  metadata:string;     // Optional JSON metadata about the device
+}
+
+table DevicesList {
+  devices:[Device];
+  total_count:int32;
+  timestamp:int64;     // When this list was generated
+}
+
+// messages.fbs
+namespace MyRemoteDevice;
+
+enum MessageType : byte {
+  GetDevicesList = 0,
+  DevicesListResponse = 1,
+  ClientToDevice = 2,
+  DeviceToClient = 3,
+  Heartbeat = 4,
+  Error = 5
+}
+
+table ErrorMessage {
+  code:int32;
+  message:string;
+  details:string;
+}
+
+table Heartbeat {
+  timestamp:int64;
+  resource_id:int64;
+}
+
+table GetDevicesListRequest {
+  filter:string;       // Optional JSON filter criteria
+  include_metadata:bool;
+}
+
+table GetDevicesListResponse {
+  devices:[Device];
+  total_count:int32;
+  filtered_count:int32;
+  request_timestamp:int64;
+  response_timestamp:int64;
+}
+
+table ClientToDeviceMessage {
+  resource_id:int64;
+  payload:string;      // Your application-specific payload
+  timestamp:int64;
+  sequence_number:int64;
+  requires_ack:bool;
+}
+
+table DeviceToClientMessage {
+  resource_id:int64;
+  payload:string;      // Your application-specific payload
+  timestamp:int64;
+  sequence_number:int64;
+  in_response_to:int64;  // Sequence number of the message being responded to
+}
+
+union MessagePayload {
+  GetDevicesListRequest,
+  GetDevicesListResponse,
+  ClientToDeviceMessage,
+  DeviceToClientMessage,
+  Heartbeat,
+  ErrorMessage
+}
+
+table Message {
+  type:MessageType;
+  payload:MessagePayload;
+}
+
+root_type Message;

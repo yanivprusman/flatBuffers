@@ -1,7 +1,19 @@
 NAME_SPACE=MRD
-FIRST_OUT_PUT_DIR=../output
-SOURCE_FILES=../fbs/$NAME_SPACE/*.fbs
+if [ -n "$BASH_SOURCE" ]; then
+    SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+else
+    SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+fi
+FIRST_OUT_PUT_DIR=$SCRIPT_DIR/../output
+SOURCE_DIR=$SCRIPT_DIR/../fbs/$NAME_SPACE
+SOURCE_FILES=$SOURCE_DIR/*.fbs
 if [ $1 ]; then
+    if [ -d "${SOURCE_DIR}" ] && compgen -G $SOURCE_FILES > /dev/null; then
+        :
+    else
+        echo "No .fbs files found in ${SOURCE_DIR}"
+        return
+    fi
     flatc $1 -o $FIRST_OUT_PUT_DIR $SOURCE_FILES
     ARG_WITHOUT_DASHES=$(echo $1 | sed 's/^-*//')
     if [ $ARG_WITHOUT_DASHES == cpp ]; then

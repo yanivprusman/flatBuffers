@@ -1,0 +1,7 @@
+namespace MRD;
+table TheTable {
+    data:string;
+}
+root_type TheTable;
+file_identifier "MRD2";
+file_extension "mrd2";

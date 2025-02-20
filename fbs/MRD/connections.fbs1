@@ -1,6 +1,9 @@
 namespace MRD;
 include "enums.fbs";
 
+table Peer {
+    
+}
 table Connections {
     servers:[connectionStatus];
     clients:[types];
