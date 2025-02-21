@@ -17,17 +17,18 @@ if [ $1 ]; then
     EXTENSION=$ARG_WITHOUT_DASHES
     OUT_PUT_DIR=$OUT_PUT_DIR/$NAME_SPACE/$EXTENSION
     mkdir -p $OUT_PUT_DIR
-    # flatc $1 -o $OUT_PUT_DIR $SOURCE_FILES
     COUNTER=0
     for file in $SOURCE_DIR/*.fbs; do
-        THE_DIR=$OUT_PUT_DIR$COUNTER
-        # $COUNTER=$((COUNTER + 1))
+        flatc $1 -o $OUT_PUT_DIR $file
+        NAME_SPACE_LOWER_CASE=${NAME_SPACE,,}
+        mv $OUT_PUT_DIR/$NAME_SPACE_LOWER_CASE.ts $OUT_PUT_DIR/$NAME_SPACE_LOWER_CASE$COUNTER.ts
         let "COUNTER++"
-        # echo "${THE_DIR}"
-        mkdir -p $THE_DIR
-        flatc $1 -o $THE_DIR "$file"
     done
-   
+    {
+        grep "^export" "$OUT_PUT_DIR"/${NAME_SPACE_LOWER_CASE}*.ts | 
+            sed 's/.*\:export/export/' | 
+            sort -u
+    } > "$OUT_PUT_DIR/merged_${NAME_SPACE_LOWER_CASE}.ts"
 else
     echo params missing
 fi

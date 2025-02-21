@@ -1,7 +1,9 @@
+include "enum100.fbs";
 namespace MRD;
 table MyTable {
-    my_data:string;
+    my_data1:string;
+    my_enum1:types;
 }
 root_type MyTable;
-file_identifier "MRD2";
-file_extension "mrd2";
+file_identifier "MRD1";
+file_extension "mrd1";

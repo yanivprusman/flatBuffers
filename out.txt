@@ -1,30 +1,61 @@
 prompt:
 these are my .fbs files: 
+File: ./enum100.fbs
+namespace MRD;
+enum types:byte {middle=0,server=1,client=2}
+file_identifier "MRD3";
+file_extension "mrd3";
 File: ./101.fbs
+include "enum100.fbs";
 namespace MRD;
 table MyTable {
-    my_ata:string;
+    my_data1:string;
+    my_enum1:types;
 }
 root_type MyTable;
-file_identifier "MRD2";
-file_extension "mrd2";
+file_identifier "MRD1";
+file_extension "mrd1";
 File: ./102.fbs
+include "enum100.fbs";
 namespace MRD;
 table MyTable2 {
-    my_ata:string;
+    my_data2:string;
+    my_enum2:types;
 }
 root_type MyTable2;
 file_identifier "MRD2";
 file_extension "mrd2";
 this is the output i get from calling 
-# flatc $1 -o $OUT_PUT_DIR $SOURCE_FILES
+flatc $1 -o $OUT_PUT_DIR $SOURCE_FILES
+/home/yaniv/101_coding/flatBuffers/output/MRD
+└── ts
+    ├── 101.ts
+    ├── 102.ts
+    ├── enum100.ts
+    ├── mrd
+    │   ├── my-table2.ts
+    │   ├── my-table.ts
+    │   └── types.ts
+    └── mrd.ts
 
-File: ./MRD/ts0/101.ts
+3 directories, 7 files
+File: ./ts/101.ts
 export * as MRD from './mrd.js';
-File: ./MRD/ts0/mrd.ts
-export { MyTable } from './mrd/my-table.js';
-File: ./MRD/ts0/mrd/my-table.ts
+File: ./ts/enum100.ts
+export * as MRD from './mrd.js';
+File: ./ts/mrd.ts
+export { types } from './mrd/types.js';
+File: ./ts/102.ts
+export * as MRD from './mrd.js';
+File: ./ts/mrd/types.ts
+export enum types {
+  middle = 0,
+  server = 1,
+  client = 2
+}
+File: ./ts/mrd/my-table.ts
 import * as flatbuffers from 'flatbuffers';
+import { types } from '../mrd/types.js';
 export class MyTable {
   bb: flatbuffers.ByteBuffer|null = null;
   bb_pos = 0;
@@ -41,42 +72,47 @@ static getSizePrefixedRootAsMyTable(bb:flatbuffers.ByteBuffer, obj?:MyTable):MyT
   return (obj || new MyTable()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 }
 static bufferHasIdentifier(bb:flatbuffers.ByteBuffer):boolean {
-  return bb.__has_identifier('MRD2');
+  return bb.__has_identifier('MRD1');
 }
-myAta():string|null
-myAta(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
-myAta(optionalEncoding?:any):string|Uint8Array|null {
+myData1():string|null
+myData1(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+myData1(optionalEncoding?:any):string|Uint8Array|null {
   const offset = this.bb!.__offset(this.bb_pos, 4);
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
-static startMyTable(builder:flatbuffers.Builder) {
-  builder.startObject(1);
+myEnum1():types {
+  const offset = this.bb!.__offset(this.bb_pos, 6);
+  return offset ? this.bb!.readInt8(this.bb_pos + offset) : types.middle;
 }
-static addMyAta(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset) {
-  builder.addFieldOffset(0, myAtaOffset, 0);
+static startMyTable(builder:flatbuffers.Builder) {
+  builder.startObject(2);
+}
+static addMyData1(builder:flatbuffers.Builder, myData1Offset:flatbuffers.Offset) {
+  builder.addFieldOffset(0, myData1Offset, 0);
+}
+static addMyEnum1(builder:flatbuffers.Builder, myEnum1:types) {
+  builder.addFieldInt8(1, myEnum1, types.middle);
 }
 static endMyTable(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
   return offset;
 }
 static finishMyTableBuffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
-  builder.finish(offset, 'MRD2');
+  builder.finish(offset, 'MRD1');
 }
 static finishSizePrefixedMyTableBuffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
-  builder.finish(offset, 'MRD2', true);
+  builder.finish(offset, 'MRD1', true);
 }
-static createMyTable(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset):flatbuffers.Offset {
+static createMyTable(builder:flatbuffers.Builder, myData1Offset:flatbuffers.Offset, myEnum1:types):flatbuffers.Offset {
   MyTable.startMyTable(builder);
-  MyTable.addMyAta(builder, myAtaOffset);
+  MyTable.addMyData1(builder, myData1Offset);
+  MyTable.addMyEnum1(builder, myEnum1);
   return MyTable.endMyTable(builder);
 }
 }
-File: ./MRD/ts1/mrd.ts
-export { MyTable2 } from './mrd/my-table2.js';
-File: ./MRD/ts1/102.ts
-export * as MRD from './mrd.js';
-File: ./MRD/ts1/mrd/my-table2.ts
+File: ./ts/mrd/my-table2.ts
 import * as flatbuffers from 'flatbuffers';
+import { types } from '../mrd/types.js';
 export class MyTable2 {
   bb: flatbuffers.ByteBuffer|null = null;
   bb_pos = 0;
@@ -95,17 +131,24 @@ static getSizePrefixedRootAsMyTable2(bb:flatbuffers.ByteBuffer, obj?:MyTable2):M
 static bufferHasIdentifier(bb:flatbuffers.ByteBuffer):boolean {
   return bb.__has_identifier('MRD2');
 }
-myAta():string|null
-myAta(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
-myAta(optionalEncoding?:any):string|Uint8Array|null {
+myData2():string|null
+myData2(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+myData2(optionalEncoding?:any):string|Uint8Array|null {
   const offset = this.bb!.__offset(this.bb_pos, 4);
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
-static startMyTable2(builder:flatbuffers.Builder) {
-  builder.startObject(1);
+myEnum2():types {
+  const offset = this.bb!.__offset(this.bb_pos, 6);
+  return offset ? this.bb!.readInt8(this.bb_pos + offset) : types.middle;
 }
-static addMyAta(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset) {
-  builder.addFieldOffset(0, myAtaOffset, 0);
+static startMyTable2(builder:flatbuffers.Builder) {
+  builder.startObject(2);
+}
+static addMyData2(builder:flatbuffers.Builder, myData2Offset:flatbuffers.Offset) {
+  builder.addFieldOffset(0, myData2Offset, 0);
+}
+static addMyEnum2(builder:flatbuffers.Builder, myEnum2:types) {
+  builder.addFieldInt8(1, myEnum2, types.middle);
 }
 static endMyTable2(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
@@ -117,9 +160,172 @@ static finishMyTable2Buffer(builder:flatbuffers.Builder, offset:flatbuffers.Offs
 static finishSizePrefixedMyTable2Buffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
   builder.finish(offset, 'MRD2', true);
 }
-static createMyTable2(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset):flatbuffers.Offset {
+static createMyTable2(builder:flatbuffers.Builder, myData2Offset:flatbuffers.Offset, myEnum2:types):flatbuffers.Offset {
   MyTable2.startMyTable2(builder);
-  MyTable2.addMyAta(builder, myAtaOffset);
+  MyTable2.addMyData2(builder, myData2Offset);
+  MyTable2.addMyEnum2(builder, myEnum2);
   return MyTable2.endMyTable2(builder);
 }
+}
+so i ran 
+    COUNTER=0
+    for file in $SOURCE_DIR/*.fbs; do
+        THE_DIR=$OUT_PUT_DIR$COUNTER
+        let "COUNTER++"
+        mkdir -p $THE_DIR
+        flatc $1 -o $THE_DIR "$file"
+    done
+instead and got:
+/home/yaniv/101_coding/flatBuffers/output/MRD
+├── ts
+├── ts0
+│   ├── 101.ts
+│   ├── mrd
+│   │   └── my-table.ts
+│   └── mrd.ts
+├── ts1
+│   ├── 102.ts
+│   ├── mrd
+│   │   └── my-table2.ts
+│   └── mrd.ts
+└── ts2
+    ├── enum100.ts
+    ├── mrd
+    │   └── types.ts
+    └── mrd.ts
+
+8 directories, 9 files
+File: ./ts0/101.ts
+export * as MRD from './mrd.js';
+File: ./ts0/mrd.ts
+export { MyTable } from './mrd/my-table.js';
+export { types } from './mrd/types.js';
+File: ./ts0/mrd/my-table.ts
+import * as flatbuffers from 'flatbuffers';
+import { types } from '../mrd/types.js';
+export class MyTable {
+  bb: flatbuffers.ByteBuffer|null = null;
+  bb_pos = 0;
+  __init(i:number, bb:flatbuffers.ByteBuffer):MyTable {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+}
+static getRootAsMyTable(bb:flatbuffers.ByteBuffer, obj?:MyTable):MyTable {
+  return (obj || new MyTable()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+}
+static getSizePrefixedRootAsMyTable(bb:flatbuffers.ByteBuffer, obj?:MyTable):MyTable {
+  bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
+  return (obj || new MyTable()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+}
+static bufferHasIdentifier(bb:flatbuffers.ByteBuffer):boolean {
+  return bb.__has_identifier('MRD1');
+}
+myData1():string|null
+myData1(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+myData1(optionalEncoding?:any):string|Uint8Array|null {
+  const offset = this.bb!.__offset(this.bb_pos, 4);
+  return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
+}
+myEnum1():types {
+  const offset = this.bb!.__offset(this.bb_pos, 6);
+  return offset ? this.bb!.readInt8(this.bb_pos + offset) : types.middle;
+}
+static startMyTable(builder:flatbuffers.Builder) {
+  builder.startObject(2);
+}
+static addMyData1(builder:flatbuffers.Builder, myData1Offset:flatbuffers.Offset) {
+  builder.addFieldOffset(0, myData1Offset, 0);
+}
+static addMyEnum1(builder:flatbuffers.Builder, myEnum1:types) {
+  builder.addFieldInt8(1, myEnum1, types.middle);
+}
+static endMyTable(builder:flatbuffers.Builder):flatbuffers.Offset {
+  const offset = builder.endObject();
+  return offset;
+}
+static finishMyTableBuffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+  builder.finish(offset, 'MRD1');
+}
+static finishSizePrefixedMyTableBuffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+  builder.finish(offset, 'MRD1', true);
+}
+static createMyTable(builder:flatbuffers.Builder, myData1Offset:flatbuffers.Offset, myEnum1:types):flatbuffers.Offset {
+  MyTable.startMyTable(builder);
+  MyTable.addMyData1(builder, myData1Offset);
+  MyTable.addMyEnum1(builder, myEnum1);
+  return MyTable.endMyTable(builder);
+}
+}
+File: ./ts1/mrd.ts
+export { MyTable2 } from './mrd/my-table2.js';
+export { types } from './mrd/types.js';
+File: ./ts1/102.ts
+export * as MRD from './mrd.js';
+File: ./ts1/mrd/my-table2.ts
+import * as flatbuffers from 'flatbuffers';
+import { types } from '../mrd/types.js';
+export class MyTable2 {
+  bb: flatbuffers.ByteBuffer|null = null;
+  bb_pos = 0;
+  __init(i:number, bb:flatbuffers.ByteBuffer):MyTable2 {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+}
+static getRootAsMyTable2(bb:flatbuffers.ByteBuffer, obj?:MyTable2):MyTable2 {
+  return (obj || new MyTable2()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+}
+static getSizePrefixedRootAsMyTable2(bb:flatbuffers.ByteBuffer, obj?:MyTable2):MyTable2 {
+  bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
+  return (obj || new MyTable2()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+}
+static bufferHasIdentifier(bb:flatbuffers.ByteBuffer):boolean {
+  return bb.__has_identifier('MRD2');
+}
+myData2():string|null
+myData2(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+myData2(optionalEncoding?:any):string|Uint8Array|null {
+  const offset = this.bb!.__offset(this.bb_pos, 4);
+  return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
+}
+myEnum2():types {
+  const offset = this.bb!.__offset(this.bb_pos, 6);
+  return offset ? this.bb!.readInt8(this.bb_pos + offset) : types.middle;
+}
+static startMyTable2(builder:flatbuffers.Builder) {
+  builder.startObject(2);
+}
+static addMyData2(builder:flatbuffers.Builder, myData2Offset:flatbuffers.Offset) {
+  builder.addFieldOffset(0, myData2Offset, 0);
+}
+static addMyEnum2(builder:flatbuffers.Builder, myEnum2:types) {
+  builder.addFieldInt8(1, myEnum2, types.middle);
+}
+static endMyTable2(builder:flatbuffers.Builder):flatbuffers.Offset {
+  const offset = builder.endObject();
+  return offset;
+}
+static finishMyTable2Buffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+  builder.finish(offset, 'MRD2');
+}
+static finishSizePrefixedMyTable2Buffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+  builder.finish(offset, 'MRD2', true);
+}
+static createMyTable2(builder:flatbuffers.Builder, myData2Offset:flatbuffers.Offset, myEnum2:types):flatbuffers.Offset {
+  MyTable2.startMyTable2(builder);
+  MyTable2.addMyData2(builder, myData2Offset);
+  MyTable2.addMyEnum2(builder, myEnum2);
+  return MyTable2.endMyTable2(builder);
+}
+}
+File: ./ts2/enum100.ts
+export * as MRD from './mrd.js';
+File: ./ts2/mrd.ts
+export { types } from './mrd/types.js';
+File: ./ts2/mrd/types.ts
+export enum types {
+  middle = 0,
+  server = 1,
+  client = 2
 }

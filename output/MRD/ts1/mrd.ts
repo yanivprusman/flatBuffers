@@ -3,3 +3,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
 export { MyTable2 } from './mrd/my-table2.js';
+export { types } from './mrd/types.js';

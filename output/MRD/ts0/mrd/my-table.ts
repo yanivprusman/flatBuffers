@@ -4,6 +4,7 @@
 
 import * as flatbuffers from 'flatbuffers';
 
+import { types } from '../mrd/types.js';
 
 
 export class MyTable {
@@ -25,22 +26,31 @@ static getSizePrefixedRootAsMyTable(bb:flatbuffers.ByteBuffer, obj?:MyTable):MyT
 }
 
 static bufferHasIdentifier(bb:flatbuffers.ByteBuffer):boolean {
-  return bb.__has_identifier('MRD2');
+  return bb.__has_identifier('MRD1');
 }
 
-myAta():string|null
-myAta(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
-myAta(optionalEncoding?:any):string|Uint8Array|null {
+myData1():string|null
+myData1(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+myData1(optionalEncoding?:any):string|Uint8Array|null {
   const offset = this.bb!.__offset(this.bb_pos, 4);
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
-static startMyTable(builder:flatbuffers.Builder) {
-  builder.startObject(1);
+myEnum1():types {
+  const offset = this.bb!.__offset(this.bb_pos, 6);
+  return offset ? this.bb!.readInt8(this.bb_pos + offset) : types.middle;
 }
 
-static addMyAta(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset) {
-  builder.addFieldOffset(0, myAtaOffset, 0);
+static startMyTable(builder:flatbuffers.Builder) {
+  builder.startObject(2);
+}
+
+static addMyData1(builder:flatbuffers.Builder, myData1Offset:flatbuffers.Offset) {
+  builder.addFieldOffset(0, myData1Offset, 0);
+}
+
+static addMyEnum1(builder:flatbuffers.Builder, myEnum1:types) {
+  builder.addFieldInt8(1, myEnum1, types.middle);
 }
 
 static endMyTable(builder:flatbuffers.Builder):flatbuffers.Offset {
@@ -49,16 +59,17 @@ static endMyTable(builder:flatbuffers.Builder):flatbuffers.Offset {
 }
 
 static finishMyTableBuffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
-  builder.finish(offset, 'MRD2');
+  builder.finish(offset, 'MRD1');
 }
 
 static finishSizePrefixedMyTableBuffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
-  builder.finish(offset, 'MRD2', true);
+  builder.finish(offset, 'MRD1', true);
 }
 
-static createMyTable(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset):flatbuffers.Offset {
+static createMyTable(builder:flatbuffers.Builder, myData1Offset:flatbuffers.Offset, myEnum1:types):flatbuffers.Offset {
   MyTable.startMyTable(builder);
-  MyTable.addMyAta(builder, myAtaOffset);
+  MyTable.addMyData1(builder, myData1Offset);
+  MyTable.addMyEnum1(builder, myEnum1);
   return MyTable.endMyTable(builder);
 }
 }
