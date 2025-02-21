@@ -1,1 +1,1 @@
-export { MyTable } from './mrd/my-table.js';
+export { MyTable2 } from './mrd/my-table2.js';

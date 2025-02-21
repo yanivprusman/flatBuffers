@@ -1,0 +1,208 @@
+File: ./MRD/ts0/101.ts
+export * as MRD from './mrd.js';
+File: ./MRD/ts0/mrd.ts
+export { MyTable } from './mrd/my-table.js';
+File: ./MRD/ts0/mrd/my-table.ts
+import * as flatbuffers from 'flatbuffers';
+export class MyTable {
+  bb: flatbuffers.ByteBuffer|null = null;
+  bb_pos = 0;
+  __init(i:number, bb:flatbuffers.ByteBuffer):MyTable {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+}
+static getRootAsMyTable(bb:flatbuffers.ByteBuffer, obj?:MyTable):MyTable {
+  return (obj || new MyTable()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+}
+static getSizePrefixedRootAsMyTable(bb:flatbuffers.ByteBuffer, obj?:MyTable):MyTable {
+  bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
+  return (obj || new MyTable()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+}
+static bufferHasIdentifier(bb:flatbuffers.ByteBuffer):boolean {
+  return bb.__has_identifier('MRD2');
+}
+myAta():string|null
+myAta(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+myAta(optionalEncoding?:any):string|Uint8Array|null {
+  const offset = this.bb!.__offset(this.bb_pos, 4);
+  return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
+}
+static startMyTable(builder:flatbuffers.Builder) {
+  builder.startObject(1);
+}
+static addMyAta(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(0, myAtaOffset, 0);
+}
+static endMyTable(builder:flatbuffers.Builder):flatbuffers.Offset {
+  const offset = builder.endObject();
+  return offset;
+}
+static finishMyTableBuffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+  builder.finish(offset, 'MRD2');
+}
+static finishSizePrefixedMyTableBuffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+  builder.finish(offset, 'MRD2', true);
+}
+static createMyTable(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset):flatbuffers.Offset {
+  MyTable.startMyTable(builder);
+  MyTable.addMyAta(builder, myAtaOffset);
+  return MyTable.endMyTable(builder);
+}
+}
+File: ./MRD/ts1/mrd.ts
+export { MyTable2 } from './mrd/my-table2.js';
+File: ./MRD/ts1/102.ts
+export * as MRD from './mrd.js';
+File: ./MRD/ts1/mrd/my-table2.ts
+import * as flatbuffers from 'flatbuffers';
+export class MyTable2 {
+  bb: flatbuffers.ByteBuffer|null = null;
+  bb_pos = 0;
+  __init(i:number, bb:flatbuffers.ByteBuffer):MyTable2 {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+}
+static getRootAsMyTable2(bb:flatbuffers.ByteBuffer, obj?:MyTable2):MyTable2 {
+  return (obj || new MyTable2()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+}
+static getSizePrefixedRootAsMyTable2(bb:flatbuffers.ByteBuffer, obj?:MyTable2):MyTable2 {
+  bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
+  return (obj || new MyTable2()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+}
+static bufferHasIdentifier(bb:flatbuffers.ByteBuffer):boolean {
+  return bb.__has_identifier('MRD2');
+}
+myAta():string|null
+myAta(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+myAta(optionalEncoding?:any):string|Uint8Array|null {
+  const offset = this.bb!.__offset(this.bb_pos, 4);
+  return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
+}
+static startMyTable2(builder:flatbuffers.Builder) {
+  builder.startObject(1);
+}
+static addMyAta(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(0, myAtaOffset, 0);
+}
+static endMyTable2(builder:flatbuffers.Builder):flatbuffers.Offset {
+  const offset = builder.endObject();
+  return offset;
+}
+static finishMyTable2Buffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+  builder.finish(offset, 'MRD2');
+}
+static finishSizePrefixedMyTable2Buffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+  builder.finish(offset, 'MRD2', true);
+}
+static createMyTable2(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset):flatbuffers.Offset {
+  MyTable2.startMyTable2(builder);
+  MyTable2.addMyAta(builder, myAtaOffset);
+  return MyTable2.endMyTable2(builder);
+}
+}
+File: ./MRD/ts0/101.ts
+export * as MRD from './mrd.js';
+File: ./MRD/ts0/mrd.ts
+export { MyTable } from './mrd/my-table.js';
+File: ./MRD/ts0/mrd/my-table.ts
+import * as flatbuffers from 'flatbuffers';
+export class MyTable {
+  bb: flatbuffers.ByteBuffer|null = null;
+  bb_pos = 0;
+  __init(i:number, bb:flatbuffers.ByteBuffer):MyTable {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+}
+static getRootAsMyTable(bb:flatbuffers.ByteBuffer, obj?:MyTable):MyTable {
+  return (obj || new MyTable()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+}
+static getSizePrefixedRootAsMyTable(bb:flatbuffers.ByteBuffer, obj?:MyTable):MyTable {
+  bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
+  return (obj || new MyTable()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+}
+static bufferHasIdentifier(bb:flatbuffers.ByteBuffer):boolean {
+  return bb.__has_identifier('MRD2');
+}
+myAta():string|null
+myAta(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+myAta(optionalEncoding?:any):string|Uint8Array|null {
+  const offset = this.bb!.__offset(this.bb_pos, 4);
+  return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
+}
+static startMyTable(builder:flatbuffers.Builder) {
+  builder.startObject(1);
+}
+static addMyAta(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(0, myAtaOffset, 0);
+}
+static endMyTable(builder:flatbuffers.Builder):flatbuffers.Offset {
+  const offset = builder.endObject();
+  return offset;
+}
+static finishMyTableBuffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+  builder.finish(offset, 'MRD2');
+}
+static finishSizePrefixedMyTableBuffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+  builder.finish(offset, 'MRD2', true);
+}
+static createMyTable(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset):flatbuffers.Offset {
+  MyTable.startMyTable(builder);
+  MyTable.addMyAta(builder, myAtaOffset);
+  return MyTable.endMyTable(builder);
+}
+}
+File: ./MRD/ts1/mrd.ts
+export { MyTable2 } from './mrd/my-table2.js';
+File: ./MRD/ts1/102.ts
+export * as MRD from './mrd.js';
+File: ./MRD/ts1/mrd/my-table2.ts
+import * as flatbuffers from 'flatbuffers';
+export class MyTable2 {
+  bb: flatbuffers.ByteBuffer|null = null;
+  bb_pos = 0;
+  __init(i:number, bb:flatbuffers.ByteBuffer):MyTable2 {
+  this.bb_pos = i;
+  this.bb = bb;
+  return this;
+}
+static getRootAsMyTable2(bb:flatbuffers.ByteBuffer, obj?:MyTable2):MyTable2 {
+  return (obj || new MyTable2()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+}
+static getSizePrefixedRootAsMyTable2(bb:flatbuffers.ByteBuffer, obj?:MyTable2):MyTable2 {
+  bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
+  return (obj || new MyTable2()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+}
+static bufferHasIdentifier(bb:flatbuffers.ByteBuffer):boolean {
+  return bb.__has_identifier('MRD2');
+}
+myAta():string|null
+myAta(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+myAta(optionalEncoding?:any):string|Uint8Array|null {
+  const offset = this.bb!.__offset(this.bb_pos, 4);
+  return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
+}
+static startMyTable2(builder:flatbuffers.Builder) {
+  builder.startObject(1);
+}
+static addMyAta(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(0, myAtaOffset, 0);
+}
+static endMyTable2(builder:flatbuffers.Builder):flatbuffers.Offset {
+  const offset = builder.endObject();
+  return offset;
+}
+static finishMyTable2Buffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+  builder.finish(offset, 'MRD2');
+}
+static finishSizePrefixedMyTable2Buffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+  builder.finish(offset, 'MRD2', true);
+}
+static createMyTable2(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset):flatbuffers.Offset {
+  MyTable2.startMyTable2(builder);
+  MyTable2.addMyAta(builder, myAtaOffset);
+  return MyTable2.endMyTable2(builder);
+}
+}

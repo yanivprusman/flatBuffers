@@ -1,11 +1,11 @@
 NAME_SPACE=MRD
 if [ -n "$BASH_SOURCE" ]; then
-    SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
-else
+    SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
     SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 fi
-SCRIPT_DIR=$SCRIPT_DIR"/"
-CLEAN_OUT_PUT_DIR=$SCRIPT_DIR../output/$NAME_SPACE
+FLAT_BUFFERS_DIR=$SCRIPT_DIR/..
+CLEAN_OUT_PUT_DIR=$FLAT_BUFFERS_DIR/output/$NAME_SPACE
 if [ -d $CLEAN_OUT_PUT_DIR ]; then
     rm -r $CLEAN_OUT_PUT_DIR
 fi
+tree $FLAT_BUFFERS_DIR/output --filelimit 10

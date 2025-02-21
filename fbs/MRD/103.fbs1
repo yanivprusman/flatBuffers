@@ -1,6 +1,6 @@
 namespace MRD;
 table MyTable2 {
-    my_data:string;
+    my_ata:string;
 }
 root_type MyTable2;
 file_identifier "MRD2";

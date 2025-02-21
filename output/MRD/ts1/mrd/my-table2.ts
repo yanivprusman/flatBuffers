@@ -6,22 +6,22 @@ import * as flatbuffers from 'flatbuffers';
 
 
 
-export class MyTable {
+export class MyTable2 {
   bb: flatbuffers.ByteBuffer|null = null;
   bb_pos = 0;
-  __init(i:number, bb:flatbuffers.ByteBuffer):MyTable {
+  __init(i:number, bb:flatbuffers.ByteBuffer):MyTable2 {
   this.bb_pos = i;
   this.bb = bb;
   return this;
 }
 
-static getRootAsMyTable(bb:flatbuffers.ByteBuffer, obj?:MyTable):MyTable {
-  return (obj || new MyTable()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+static getRootAsMyTable2(bb:flatbuffers.ByteBuffer, obj?:MyTable2):MyTable2 {
+  return (obj || new MyTable2()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 }
 
-static getSizePrefixedRootAsMyTable(bb:flatbuffers.ByteBuffer, obj?:MyTable):MyTable {
+static getSizePrefixedRootAsMyTable2(bb:flatbuffers.ByteBuffer, obj?:MyTable2):MyTable2 {
   bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
-  return (obj || new MyTable()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+  return (obj || new MyTable2()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 }
 
 static bufferHasIdentifier(bb:flatbuffers.ByteBuffer):boolean {
@@ -35,7 +35,7 @@ myAta(optionalEncoding?:any):string|Uint8Array|null {
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
-static startMyTable(builder:flatbuffers.Builder) {
+static startMyTable2(builder:flatbuffers.Builder) {
   builder.startObject(1);
 }
 
@@ -43,22 +43,22 @@ static addMyAta(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset) {
   builder.addFieldOffset(0, myAtaOffset, 0);
 }
 
-static endMyTable(builder:flatbuffers.Builder):flatbuffers.Offset {
+static endMyTable2(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
   return offset;
 }
 
-static finishMyTableBuffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+static finishMyTable2Buffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
   builder.finish(offset, 'MRD2');
 }
 
-static finishSizePrefixedMyTableBuffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
+static finishSizePrefixedMyTable2Buffer(builder:flatbuffers.Builder, offset:flatbuffers.Offset) {
   builder.finish(offset, 'MRD2', true);
 }
 
-static createMyTable(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset):flatbuffers.Offset {
-  MyTable.startMyTable(builder);
-  MyTable.addMyAta(builder, myAtaOffset);
-  return MyTable.endMyTable(builder);
+static createMyTable2(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset):flatbuffers.Offset {
+  MyTable2.startMyTable2(builder);
+  MyTable2.addMyAta(builder, myAtaOffset);
+  return MyTable2.endMyTable2(builder);
 }
 }
