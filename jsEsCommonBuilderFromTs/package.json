@@ -1,13 +1,39 @@
 {
-    "name": "flatbuffers-demo",
+    "name": "mrd",
     "version": "1.0.0",
+    "description": "MRD FlatBuffers Implementation",
+    "files": [
+      "js/**/*.js",
+      "js/**/*.d.ts",
+      "mjs/**/*.js",
+      "mjs/**/*.d.ts",
+      "ts/**/*.ts"
+    ],
+    "main": "js/merged_mrd.js",
+    "module": "mjs/merged_mrd.js",
+    "types": "js/merged_mrd.d.ts",
+    "directories": {
+      "test": "tests"
+    },
     "scripts": {
-      "build:browser": "tsc -p tsconfig.browser.json",
-      "build:node": "tsc -p tsconfig.node.json",
-      "build": "npm run build:browser && npm run build:node"
+      "clean": "rimraf js mjs",
+      "lint": "eslint ts",
+      "build:cjs": "tsc",
+      "build:esm": "tsc -p tsconfig.mjs.json",
+      "build:browser": "esbuild js/merged_mrd.js --minify --global-name=mrd --bundle --outfile=js/merged_mrd.min.js",
+      "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:browser",
+      "prepublishOnly": "npm run build"
+    },
+    "dependencies": {
+      "flatbuffers": "^25.2.10"
     },
     "devDependencies": {
-      "typescript": "^5.0.0",
-      "flatbuffers": "^23.5.26"
+      "@types/node": "^20.10.4",
+      "@typescript-eslint/eslint-plugin": "^6.13.2",
+      "@typescript-eslint/parser": "^6.13.2",
+      "esbuild": "^0.19.8",
+      "eslint": "^8.55.0",
+      "rimraf": "^5.0.5",
+      "typescript": "5.3.3"
     }
-}
+  }

@@ -4,6 +4,7 @@
 
 import * as flatbuffers from 'flatbuffers';
 
+import { types } from '../mrd/types.js';
 
 
 export class MyTable2 {
@@ -28,19 +29,28 @@ static bufferHasIdentifier(bb:flatbuffers.ByteBuffer):boolean {
   return bb.__has_identifier('MRD2');
 }
 
-myAta():string|null
-myAta(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
-myAta(optionalEncoding?:any):string|Uint8Array|null {
+myData2():string|null
+myData2(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
+myData2(optionalEncoding?:any):string|Uint8Array|null {
   const offset = this.bb!.__offset(this.bb_pos, 4);
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
-static startMyTable2(builder:flatbuffers.Builder) {
-  builder.startObject(1);
+myEnum2():types {
+  const offset = this.bb!.__offset(this.bb_pos, 6);
+  return offset ? this.bb!.readInt8(this.bb_pos + offset) : types.middle;
 }
 
-static addMyAta(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset) {
-  builder.addFieldOffset(0, myAtaOffset, 0);
+static startMyTable2(builder:flatbuffers.Builder) {
+  builder.startObject(2);
+}
+
+static addMyData2(builder:flatbuffers.Builder, myData2Offset:flatbuffers.Offset) {
+  builder.addFieldOffset(0, myData2Offset, 0);
+}
+
+static addMyEnum2(builder:flatbuffers.Builder, myEnum2:types) {
+  builder.addFieldInt8(1, myEnum2, types.middle);
 }
 
 static endMyTable2(builder:flatbuffers.Builder):flatbuffers.Offset {
@@ -56,9 +66,10 @@ static finishSizePrefixedMyTable2Buffer(builder:flatbuffers.Builder, offset:flat
   builder.finish(offset, 'MRD2', true);
 }
 
-static createMyTable2(builder:flatbuffers.Builder, myAtaOffset:flatbuffers.Offset):flatbuffers.Offset {
+static createMyTable2(builder:flatbuffers.Builder, myData2Offset:flatbuffers.Offset, myEnum2:types):flatbuffers.Offset {
   MyTable2.startMyTable2(builder);
-  MyTable2.addMyAta(builder, myAtaOffset);
+  MyTable2.addMyData2(builder, myData2Offset);
+  MyTable2.addMyEnum2(builder, myEnum2);
   return MyTable2.endMyTable2(builder);
 }
 }

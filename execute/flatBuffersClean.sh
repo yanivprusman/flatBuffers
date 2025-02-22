@@ -1,0 +1,16 @@
+if [ $# -ne 1 ]; then
+    echo "Usage: flatBuffersClean.sh <namespace>"
+    echo "Example: flatBuffersClean.sh MRD"
+    return
+fi
+NAME_SPACE=$1
+if [ -n "$BASH_SOURCE" ]; then
+    SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+    SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+fi
+FLAT_BUFFERS_DIR=$SCRIPT_DIR/..
+CLEAN_OUT_PUT_DIR=$FLAT_BUFFERS_DIR/output/$NAME_SPACE
+if [ -d $CLEAN_OUT_PUT_DIR ]; then
+    rm -r $CLEAN_OUT_PUT_DIR
+fi
+tree $FLAT_BUFFERS_DIR/output --filelimit 10

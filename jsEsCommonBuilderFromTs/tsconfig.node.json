@@ -1,8 +1,0 @@
-{
-    "extends": "./tsconfig.base.json",
-    "compilerOptions": {
-      "outDir": "./dist/node",
-      "module": "CommonJS",
-      "target": "ES2020"
-    }
-  }

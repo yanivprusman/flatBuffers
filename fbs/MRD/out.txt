@@ -1,15 +1,35 @@
+File: ./enum100.fbs
+namespace MRD;
+enum types:byte {middle=0,server=1,client=2}
+file_identifier "MRD3";
+file_extension "mrd3";
 File: ./101.fbs
+include "enum100.fbs";
 namespace MRD;
 table MyTable {
-    my_ata:string;
+    my_data1:string;
+    my_enum1:types;
 }
 root_type MyTable;
-file_identifier "MRD2";
-file_extension "mrd2";File: ./102.fbs
+file_identifier "MRD1";
+file_extension "mrd1";
+File: ./102.fbs
+include "enum100.fbs";
 namespace MRD;
 table MyTable2 {
-    my_ata:string;
+    my_data2:string;
+    my_enum2:types;
 }
 root_type MyTable2;
 file_identifier "MRD2";
 file_extension "mrd2";
+
+<script src="flatbuffers.min.js"></script>
+<script src="merged_mrd.min.js"></script>
+<div id="content"></div>
+<script>
+function doIt() {
+    let builder = new flatbuffers.Builder(1024);
+example me how to use this mrd object continue from here
+
+
