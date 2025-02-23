@@ -1,4 +1,8 @@
-#!/bin/bash
+if [ $# -ne 1 ]; then
+    echo "Usage: flatBuffersCleanAndBuild.sh <namespace>"
+    echo "Example: flatBuffersCleanAndBuild.sh MRD"
+    return
+fi
 if [ -n "$BASH_SOURCE" ]; then
     SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
     SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
@@ -6,7 +10,7 @@ else
     SCRIPT_PATH="$(readlink -f "$0")"
     SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 fi
-NAME_SPACE=MRD
+NAME_SPACE=$1
 SOURCE_DIR=$SCRIPT_DIR/../fbs/$NAME_SPACE
 if [ -d "${SOURCE_DIR}" ] && compgen -G "${SOURCE_DIR}" >/dev/null; then
     :
@@ -14,10 +18,10 @@ else
     echo "No .fbs files found in ${SOURCE_DIR}"
     return
 fi
-. $SCRIPT_DIR/clean$NAME_SPACE.sh
-. $SCRIPT_DIR/build$NAME_SPACE.sh --php
-. $SCRIPT_DIR/build$NAME_SPACE.sh --cpp
-. $SCRIPT_DIR/build$NAME_SPACE.sh --ts
+. $SCRIPT_DIR/flatBuffersClean.sh $NAME_SPACE
+. $SCRIPT_DIR/flatBuffersBuild.sh $NAME_SPACE --php
+. $SCRIPT_DIR/flatBuffersBuild.sh $NAME_SPACE --cpp
+. $SCRIPT_DIR/flatBuffersBuild.sh $NAME_SPACE --ts
 if [ -d $SCRIPT_DIR/../output/$NAME_SPACE ]; then
     tree $SCRIPT_DIR/../output/$NAME_SPACE --filelimit 10
 else

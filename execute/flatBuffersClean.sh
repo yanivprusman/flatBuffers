@@ -13,4 +13,4 @@ CLEAN_OUT_PUT_DIR=$FLAT_BUFFERS_DIR/output/$NAME_SPACE
 if [ -d $CLEAN_OUT_PUT_DIR ]; then
     rm -r $CLEAN_OUT_PUT_DIR
 fi
-tree $FLAT_BUFFERS_DIR/output --filelimit 10
+# tree $FLAT_BUFFERS_DIR/output --filelimit 10

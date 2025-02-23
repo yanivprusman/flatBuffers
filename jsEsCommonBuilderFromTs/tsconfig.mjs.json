@@ -1,8 +1,9 @@
 {
-    "extends": "./tsconfig.json",
-    "compilerOptions": {
-      "module": "es2020",
-      "outDir": "./mjs",
-      "moduleResolution": "node"
-    }
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "es2020",
+    "outDir": "./mjs",
+    "moduleResolution": "node",
+    "outFile": null
+  }
 }
