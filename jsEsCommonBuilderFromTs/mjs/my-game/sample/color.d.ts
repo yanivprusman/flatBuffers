@@ -3,3 +3,4 @@ export declare enum Color {
     Green = 1,
     Blue = 2
 }
+//# sourceMappingURL=color.d.ts.map

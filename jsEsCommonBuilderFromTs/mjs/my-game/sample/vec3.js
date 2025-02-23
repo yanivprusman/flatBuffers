@@ -29,3 +29,4 @@ export class Vec3 {
         return builder.offset();
     }
 }
+//# sourceMappingURL=vec3.js.map

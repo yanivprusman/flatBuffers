@@ -46,3 +46,4 @@ export class Weapon {
         return Weapon.endWeapon(builder);
     }
 }
+//# sourceMappingURL=weapon.js.map

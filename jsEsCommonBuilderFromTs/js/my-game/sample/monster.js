@@ -186,3 +186,4 @@ class Monster {
     }
 }
 exports.Monster = Monster;
+//# sourceMappingURL=monster.js.map

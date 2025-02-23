@@ -33,3 +33,4 @@ class Vec3 {
     }
 }
 exports.Vec3 = Vec3;
+//# sourceMappingURL=vec3.js.map

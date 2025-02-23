@@ -45,3 +45,4 @@ export declare class Monster {
     static finishSizePrefixedMonsterBuffer(builder: flatbuffers.Builder, offset: flatbuffers.Offset): void;
     static createMonster(builder: flatbuffers.Builder, posOffset: flatbuffers.Offset, mana: number, hp: number, nameOffset: flatbuffers.Offset, inventoryOffset: flatbuffers.Offset, color: Color, weaponsOffset: flatbuffers.Offset, equippedType: Equipment, equippedOffset: flatbuffers.Offset, pathOffset: flatbuffers.Offset): flatbuffers.Offset;
 }
+//# sourceMappingURL=monster.d.ts.map

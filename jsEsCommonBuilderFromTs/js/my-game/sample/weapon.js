@@ -73,3 +73,4 @@ class Weapon {
     }
 }
 exports.Weapon = Weapon;
+//# sourceMappingURL=weapon.js.map

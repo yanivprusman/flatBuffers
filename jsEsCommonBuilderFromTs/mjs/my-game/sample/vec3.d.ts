@@ -9,3 +9,4 @@ export declare class Vec3 {
     static sizeOf(): number;
     static createVec3(builder: flatbuffers.Builder, x: number, y: number, z: number): flatbuffers.Offset;
 }
+//# sourceMappingURL=vec3.d.ts.map

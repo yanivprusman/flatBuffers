@@ -14,3 +14,4 @@ export declare class Weapon {
     static endWeapon(builder: flatbuffers.Builder): flatbuffers.Offset;
     static createWeapon(builder: flatbuffers.Builder, nameOffset: flatbuffers.Offset, damage: number): flatbuffers.Offset;
 }
+//# sourceMappingURL=weapon.d.ts.map

@@ -25,3 +25,4 @@ function unionListToEquipment(type, accessor, index) {
     }
 }
 exports.unionListToEquipment = unionListToEquipment;
+//# sourceMappingURL=equipment.js.map

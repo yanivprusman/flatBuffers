@@ -159,3 +159,4 @@ export class Monster {
         return Monster.endMonster(builder);
     }
 }
+//# sourceMappingURL=monster.js.map

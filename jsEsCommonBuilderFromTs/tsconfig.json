@@ -1,20 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es2018",
+    "target": "es2015",
     "module": "commonjs",
+    "moduleResolution": "node",
     "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
     "outDir": "./js",
+    "rootDir": "./ts",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "rootDir": "./ts",
-    "outFile": null
+    "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "ts/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["ts/**/*"],
+  "exclude": ["node_modules"]
 }

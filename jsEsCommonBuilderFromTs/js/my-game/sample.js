@@ -13,3 +13,4 @@ var vec3_js_1 = require("./sample/vec3.js");
 Object.defineProperty(exports, "Vec3", { enumerable: true, get: function () { return vec3_js_1.Vec3; } });
 var weapon_js_1 = require("./sample/weapon.js");
 Object.defineProperty(exports, "Weapon", { enumerable: true, get: function () { return weapon_js_1.Weapon; } });
+//# sourceMappingURL=sample.js.map

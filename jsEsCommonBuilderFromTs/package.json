@@ -1,7 +1,7 @@
 {
-  "name": "mrd",
+  "name": "flatbuffers-mygame",
   "version": "1.0.0",
-  "description": "MRD FlatBuffers Implementation",
+  "description": "FlatBuffers Implementation for MyGame",
   "files": [
     "js/**/*.js",
     "js/**/*.d.ts",
@@ -9,18 +9,15 @@
     "mjs/**/*.d.ts",
     "ts/**/*.ts"
   ],
-  "main": "./js/**/*.js",
-  "module": "./mjs/**/*.js",
-  "types": "./js/**/*.d.ts",
-  "directories": {
-    "test": "tests"
-  },
+  "main": "./js/index.js",
+  "module": "./mjs/index.js",
+  "types": "./js/index.d.ts",
   "scripts": {
     "clean": "rimraf js mjs",
     "lint": "eslint ts",
     "build:cjs": "tsc",
     "build:esm": "tsc -p tsconfig.mjs.json",
-    "build:browser": "esbuild ./js/**/*.js --minify --global-name=MyGame --bundle --outfile=js/MyGame.min.js",
+    "build:browser": "./build-browser.sh MyGame",
     "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:browser",
     "prepublishOnly": "npm run build"
   },
