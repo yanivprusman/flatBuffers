@@ -1,0 +1,14 @@
+if [ $# -ne 1 ]; then
+    echo "Usage: flatBuffersShowOutput <namespace>"
+    echo "Example: flatBuffersShowOutput MRD"
+    return
+fi
+NAME_SPACE=$1
+SCRIPT_DIR="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+FLAT_BUFFERS_DIR=$SCRIPT_DIR/..
+SHOW_OUT_PUT_DIR=$FLAT_BUFFERS_DIR/output/$NAME_SPACE
+if [ -d $SHOW_OUT_PUT_DIR ]; then
+    tree --filelimit 10 $SHOW_OUT_PUT_DIR
+else
+    echo no output in $SHOW_OUT_PUT_DIR
+fi

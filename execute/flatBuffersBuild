@@ -3,9 +3,9 @@ if [ $# -ne 2 ]; then
     echo "Example: flatBuffersBuild.sh MRD ts"
     return
 fi
-ORIGINAL_DIR="$(pwd)" 
 NAME_SPACE=$1
 FORMAT=$2
+ORIGINAL_DIR="$(pwd)" 
 if [ -n "$BASH_SOURCE" ]; then
     SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
     SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
@@ -26,7 +26,7 @@ EXTENSION=$FORMAT_WITHOUT_DASHES
 OUT_PUT_DIR=$OUT_PUT_DIR/$NAME_SPACE/$EXTENSION
 mkdir -p $OUT_PUT_DIR
 if [ $FORMAT_WITHOUT_DASHES = ts ]; then
-    flatc --ts -o $OUT_PUT_DIR $SOURCE_FILES 
+    flatc --ts -o $OUT_PUT_DIR $SOURCE_FILES #dont add flags yet(the same as not ts format)
     rm -rf "$JS_BUILDER_DIR/ts"
     cp -r $OUT_PUT_DIR $JS_BUILDER_DIR
     . $SCRIPT_DIR/packageJsonConfig.sh $NAME_SPACE

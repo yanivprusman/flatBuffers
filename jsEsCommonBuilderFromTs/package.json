@@ -1,13 +1,13 @@
 {
-  "name": "flatbuffers-mrd",
+  "name": "flatbuffers-my-game",
   "version": "1.0.0",
-  "description": "FlatBuffers Implementation for MRD",
+  "description": "FlatBuffers Implementation for my-game",
   "files": [
-    "js/**/*.js",
-    "js/**/*.d.ts",
-    "mjs/**/*.js",
-    "mjs/**/*.d.ts",
-    "ts/**/*.ts"
+    "/home/yaniv/101_coding/flatBuffers/execute/../jsEsCommonBuilderFromTs/js/**/*.js",
+    "/home/yaniv/101_coding/flatBuffers/execute/../jsEsCommonBuilderFromTs/js/**/*.d.ts",
+    "/home/yaniv/101_coding/flatBuffers/execute/../jsEsCommonBuilderFromTs/mjs/**/*.js",
+    "/home/yaniv/101_coding/flatBuffers/execute/../jsEsCommonBuilderFromTs/mjs/**/*.d.ts",
+    "/home/yaniv/101_coding/flatBuffers/execute/../jsEsCommonBuilderFromTs/ts/**/*.ts"
   ],
   "main": "./js/index.js",
   "module": "./mjs/index.js",
@@ -17,7 +17,7 @@
     "lint": "eslint ts",
     "build:cjs": "tsc",
     "build:esm": "tsc -p tsconfig.mjs.json",
-    "build:browser": "./build-browser.sh MRD",
+    "build:browser": "npx esbuild /home/yaniv/101_coding/flatBuffers/execute/../jsEsCommonBuilderFromTs/js/my-game.js --bundle --minify --global-name=MyGame --outfile=/home/yaniv/101_coding/flatBuffers/execute/../jsEsCommonBuilderFromTsjs/my-game.min.js",
     "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:browser",
     "prepublishOnly": "npm run build"
   },

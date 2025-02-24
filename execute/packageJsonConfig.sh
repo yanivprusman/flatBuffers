@@ -1,36 +1,27 @@
-SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
-SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+if [ $# -ne 1 ]; then
+    echo "Usage: packageJsonConfig.sh <namespace>"
+    echo "Example: packageJsonConfig.sh MRD"
+    return
+fi
+NAME_SPACE=$1;
+ORIGINAL_DIR="$(pwd)" 
+SCRIPT_DIR="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 FLAT_BUFFERS_DIR="$SCRIPT_DIR/.."
-PACKAGE_JSON="$FLAT_BUFFERS_DIR/jsEsCommonBuilderFromTs/package.json"
-if [ -z "$NAME_SPACE" ]; then
-    echo "Error: NAME_SPACE variable not set"
-    exit 1
-fi
-if [ ! -f "$PACKAGE_JSON" ]; then
-    echo "Error: Cannot find package.json at $PACKAGE_JSON"
-    exit 1
-fi
-BUILD_SCRIPT="$(dirname "$PACKAGE_JSON")/build-browser.sh"
-cat > "$BUILD_SCRIPT" << 'EOF'
-#!/bin/bash
-NAMESPACE=$1
-FIRST_DIR=$(find js -type f -name '*.js' -exec dirname {} \; | sort -u | head -n 1)
-npx esbuild $FIRST_DIR/*.js --bundle --minify --global-name=$NAMESPACE --outfile=js/$NAMESPACE.min.js
-EOF
-chmod +x "$BUILD_SCRIPT"
-cd "$(dirname "$PACKAGE_JSON")"
-npm install
+JS_ES_COMMON_BUILD_FROM_Ts_DIR="$FLAT_BUFFERS_DIR"/jsEsCommonBuilderFromTs
+PACKAGE_JSON=$JS_ES_COMMON_BUILD_FROM_Ts_DIR/package.json
+KEBAB_CASE_NAME=$(echo "$NAME_SPACE" | sed 's/\([A-Z]\)/-\L\1/g' | sed 's/^-//')
+GLOBAL_NAME=$(echo "$NAME_SPACE" | sed 's/[^a-zA-Z0-9]//g')
 cat > "$PACKAGE_JSON" << EOF
 {
-  "name": "flatbuffers-${NAME_SPACE,,}",
+  "name": "flatbuffers-${KEBAB_CASE_NAME}",
   "version": "1.0.0",
-  "description": "FlatBuffers Implementation for ${NAME_SPACE}",
+  "description": "FlatBuffers Implementation for ${KEBAB_CASE_NAME}",
   "files": [
-    "js/**/*.js",
-    "js/**/*.d.ts",
-    "mjs/**/*.js",
-    "mjs/**/*.d.ts",
-    "ts/**/*.ts"
+    "${JS_ES_COMMON_BUILD_FROM_Ts_DIR}/js/**/*.js",
+    "${JS_ES_COMMON_BUILD_FROM_Ts_DIR}/js/**/*.d.ts",
+    "${JS_ES_COMMON_BUILD_FROM_Ts_DIR}/mjs/**/*.js",
+    "${JS_ES_COMMON_BUILD_FROM_Ts_DIR}/mjs/**/*.d.ts",
+    "${JS_ES_COMMON_BUILD_FROM_Ts_DIR}/ts/**/*.ts"
   ],
   "main": "./js/index.js",
   "module": "./mjs/index.js",
@@ -40,7 +31,7 @@ cat > "$PACKAGE_JSON" << EOF
     "lint": "eslint ts",
     "build:cjs": "tsc",
     "build:esm": "tsc -p tsconfig.mjs.json",
-    "build:browser": "./build-browser.sh ${NAME_SPACE}",
+    "build:browser": "npx esbuild ${JS_ES_COMMON_BUILD_FROM_Ts_DIR}/js/${KEBAB_CASE_NAME}.js --bundle --minify --global-name=${GLOBAL_NAME} --outfile=${JS_ES_COMMON_BUILD_FROM_Ts_DIR}js/${KEBAB_CASE_NAME}.min.js",
     "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:browser",
     "prepublishOnly": "npm run build"
   },
@@ -91,4 +82,5 @@ cd "$(dirname "$PACKAGE_JSON")"
 if [ ! -d "node_modules" ]; then
     npm install
 fi
-echo "Build configuration updated for namespace: $NAME_SPACE"
+echo "Build configuration updated for namespace: $KEBAB_CASE_NAME"
+cd "$ORIGINAL_DIR" 

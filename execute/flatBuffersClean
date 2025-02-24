@@ -1,6 +1,6 @@
 if [ $# -ne 1 ]; then
-    echo "Usage: flatBuffersClean.sh <namespace>"
-    echo "Example: flatBuffersClean.sh MRD"
+    echo "Usage: flatBuffersClean <namespace>"
+    echo "Example: flatBuffersClean MRD"
     return
 fi
 NAME_SPACE=$1
