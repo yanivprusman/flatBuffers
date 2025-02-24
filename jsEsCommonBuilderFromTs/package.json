@@ -1,7 +1,7 @@
 {
-  "name": "flatbuffers-mygame",
+  "name": "flatbuffers-mrd",
   "version": "1.0.0",
-  "description": "FlatBuffers Implementation for MyGame",
+  "description": "FlatBuffers Implementation for MRD",
   "files": [
     "js/**/*.js",
     "js/**/*.d.ts",
@@ -17,7 +17,7 @@
     "lint": "eslint ts",
     "build:cjs": "tsc",
     "build:esm": "tsc -p tsconfig.mjs.json",
-    "build:browser": "./build-browser.sh MyGame",
+    "build:browser": "./build-browser.sh MRD",
     "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:browser",
     "prepublishOnly": "npm run build"
   },

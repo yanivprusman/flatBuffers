@@ -26,7 +26,7 @@ EXTENSION=$FORMAT_WITHOUT_DASHES
 OUT_PUT_DIR=$OUT_PUT_DIR/$NAME_SPACE/$EXTENSION
 mkdir -p $OUT_PUT_DIR
 if [ $FORMAT_WITHOUT_DASHES = ts ]; then
-    flatc --ts --ts-flat-files --no-ts-exports -o $OUT_PUT_DIR $SOURCE_FILES
+    flatc --ts -o $OUT_PUT_DIR $SOURCE_FILES 
     rm -rf "$JS_BUILDER_DIR/ts"
     cp -r $OUT_PUT_DIR $JS_BUILDER_DIR
     . $SCRIPT_DIR/packageJsonConfig.sh $NAME_SPACE

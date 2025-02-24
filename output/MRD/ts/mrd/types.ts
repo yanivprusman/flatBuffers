@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
 export enum types {
-  middle = 0,
-  server = 1,
-  client = 2
+  server = 0,
+  client = 1
 }
