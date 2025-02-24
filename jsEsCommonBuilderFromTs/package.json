@@ -1,36 +1,12 @@
 {
-  "name": "flatbuffers-my-game",
+  "name": "flatbuffers-test",
   "version": "1.0.0",
-  "description": "FlatBuffers Implementation for my-game",
-  "files": [
-    "/home/yaniv/101_coding/flatBuffers/execute/../jsEsCommonBuilderFromTs/js/**/*.js",
-    "/home/yaniv/101_coding/flatBuffers/execute/../jsEsCommonBuilderFromTs/js/**/*.d.ts",
-    "/home/yaniv/101_coding/flatBuffers/execute/../jsEsCommonBuilderFromTs/mjs/**/*.js",
-    "/home/yaniv/101_coding/flatBuffers/execute/../jsEsCommonBuilderFromTs/mjs/**/*.d.ts",
-    "/home/yaniv/101_coding/flatBuffers/execute/../jsEsCommonBuilderFromTs/ts/**/*.ts"
-  ],
-  "main": "./js/index.js",
-  "module": "./mjs/index.js",
-  "types": "./js/index.d.ts",
+  "type": "module",
   "scripts": {
-    "clean": "rimraf js mjs",
-    "lint": "eslint ts",
-    "build:cjs": "tsc",
-    "build:esm": "tsc -p tsconfig.mjs.json",
-    "build:browser": "npx esbuild /home/yaniv/101_coding/flatBuffers/execute/../jsEsCommonBuilderFromTs/js/my-game.js --bundle --minify --global-name=MyGame --outfile=/home/yaniv/101_coding/flatBuffers/execute/../jsEsCommonBuilderFromTsjs/my-game.min.js",
-    "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:browser",
-    "prepublishOnly": "npm run build"
-  },
-  "dependencies": {
-    "flatbuffers": "^25.2.10"
+    "build": "tsc && esbuild dist/my-game/sample.js --bundle --minify --global-name=MyGame --outfile=dist/my-game.min.js"
   },
   "devDependencies": {
-    "@types/node": "^20.10.4",
-    "@typescript-eslint/eslint-plugin": "^6.13.2",
-    "@typescript-eslint/parser": "^6.13.2",
-    "esbuild": "^0.19.8",
-    "eslint": "^8.55.0",
-    "rimraf": "^5.0.5",
-    "typescript": "5.3.3"
+    "esbuild": "^0.20.1",
+    "typescript": "^5.0.0"
   }
 }

@@ -7,8 +7,8 @@ NAME_SPACE=$1;
 ORIGINAL_DIR="$(pwd)" 
 SCRIPT_DIR="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 FLAT_BUFFERS_DIR="$SCRIPT_DIR/.."
-JS_ES_COMMON_BUILD_FROM_Ts_DIR="$FLAT_BUFFERS_DIR"/jsEsCommonBuilderFromTs
-PACKAGE_JSON=$JS_ES_COMMON_BUILD_FROM_Ts_DIR/package.json
+JS_ES_COMMON_BUILD_FROM_TS_DIR="$FLAT_BUFFERS_DIR"/jsEsCommonBuilderFromTs
+PACKAGE_JSON=${JS_ES_COMMON_BUILD_FROM_TS_DIR}/package.json
 KEBAB_CASE_NAME=$(echo "$NAME_SPACE" | sed 's/\([A-Z]\)/-\L\1/g' | sed 's/^-//')
 GLOBAL_NAME=$(echo "$NAME_SPACE" | sed 's/[^a-zA-Z0-9]//g')
 cat > "$PACKAGE_JSON" << EOF
@@ -17,11 +17,11 @@ cat > "$PACKAGE_JSON" << EOF
   "version": "1.0.0",
   "description": "FlatBuffers Implementation for ${KEBAB_CASE_NAME}",
   "files": [
-    "${JS_ES_COMMON_BUILD_FROM_Ts_DIR}/js/**/*.js",
-    "${JS_ES_COMMON_BUILD_FROM_Ts_DIR}/js/**/*.d.ts",
-    "${JS_ES_COMMON_BUILD_FROM_Ts_DIR}/mjs/**/*.js",
-    "${JS_ES_COMMON_BUILD_FROM_Ts_DIR}/mjs/**/*.d.ts",
-    "${JS_ES_COMMON_BUILD_FROM_Ts_DIR}/ts/**/*.ts"
+    "${JS_ES_COMMON_BUILD_FROM_TS_DIR}/js/**/*.js",
+    "${JS_ES_COMMON_BUILD_FROM_TS_DIR}/js/**/*.d.ts",
+    "${JS_ES_COMMON_BUILD_FROM_TS_DIR}/mjs/**/*.js",
+    "${JS_ES_COMMON_BUILD_FROM_TS_DIR}/mjs/**/*.d.ts",
+    "${JS_ES_COMMON_BUILD_FROM_TS_DIR}/ts/**/*.ts"
   ],
   "main": "./js/index.js",
   "module": "./mjs/index.js",
@@ -31,7 +31,7 @@ cat > "$PACKAGE_JSON" << EOF
     "lint": "eslint ts",
     "build:cjs": "tsc",
     "build:esm": "tsc -p tsconfig.mjs.json",
-    "build:browser": "npx esbuild ${JS_ES_COMMON_BUILD_FROM_Ts_DIR}/js/${KEBAB_CASE_NAME}.js --bundle --minify --global-name=${GLOBAL_NAME} --outfile=${JS_ES_COMMON_BUILD_FROM_Ts_DIR}js/${KEBAB_CASE_NAME}.min.js",
+    "build:browser": "npx esbuild ${JS_ES_COMMON_BUILD_FROM_TS_DIR}/js/${KEBAB_CASE_NAME}.js --bundle --minify --global-name=${GLOBAL_NAME} --outfile=${JS_ES_COMMON_BUILD_FROM_TS_DIR}js/${KEBAB_CASE_NAME}.min.js",
     "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:browser",
     "prepublishOnly": "npm run build"
   },
@@ -58,23 +58,23 @@ cat > "$(dirname "$PACKAGE_JSON")/tsconfig.json" << EOF
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "./js",
-    "rootDir": "./ts",
+    "outDir": "${JS_ES_COMMON_BUILD_FROM_TS_DIR}/js",
+    "rootDir": "${JS_ES_COMMON_BUILD_FROM_TS_DIR}/ts",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["ts/**/*"],
+  "include": ["${JS_ES_COMMON_BUILD_FROM_TS_DIR}/ts/**/*"],
   "exclude": ["node_modules"]
 }
 EOF
 cat > "$(dirname "$PACKAGE_JSON")/tsconfig.mjs.json" << EOF
 {
-  "extends": "./tsconfig.json",
+  "extends": "${JS_ES_COMMON_BUILD_FROM_TS_DIR}/tsconfig.json",
   "compilerOptions": {
     "module": "es2015",
-    "outDir": "./mjs"
+    "outDir": "${JS_ES_COMMON_BUILD_FROM_TS_DIR}/mjs"
   }
 }
 EOF
