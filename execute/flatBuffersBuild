@@ -3,6 +3,7 @@ if [ $# -ne 2 ]; then
     echo "Example: flatBuffersBuild.sh MRD ts"
     return
 fi
+ORIGINAL_DIR="$(pwd)" 
 NAME_SPACE=$1
 FORMAT=$2
 if [ -n "$BASH_SOURCE" ]; then
@@ -24,8 +25,8 @@ FORMAT_WITHOUT_DASHES=$(echo $FORMAT | sed 's/^-*//')
 EXTENSION=$FORMAT_WITHOUT_DASHES
 OUT_PUT_DIR=$OUT_PUT_DIR/$NAME_SPACE/$EXTENSION
 mkdir -p $OUT_PUT_DIR
-flatc $FORMAT -o $OUT_PUT_DIR $SOURCE_FILES
 if [ $FORMAT_WITHOUT_DASHES = ts ]; then
+    flatc --ts --ts-flat-files --no-ts-exports -o $OUT_PUT_DIR $SOURCE_FILES
     rm -rf "$JS_BUILDER_DIR/ts"
     cp -r $OUT_PUT_DIR $JS_BUILDER_DIR
     . $SCRIPT_DIR/packageJsonConfig.sh $NAME_SPACE
@@ -33,4 +34,7 @@ if [ $FORMAT_WITHOUT_DASHES = ts ]; then
     cp $JS_BUILDER_DIR/js/*.min.js $OUT_PUT_DIR/
     DOCS_DIR=$FLAT_BUFFERS_DIR/docs
     cp $JS_BUILDER_DIR/js/*.min.js $DOCS_DIR/
+else
+    flatc $FORMAT -o $OUT_PUT_DIR $SOURCE_FILES
 fi
+cd "$ORIGINAL_DIR" 

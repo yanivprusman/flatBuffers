@@ -5,12 +5,10 @@ namespace MRD;
 
 class types
 {
-    const middle = 0;
-    const server = 1;
-    const client = 2;
+    const server = 0;
+    const client = 1;
 
     private static $names = array(
-        types::middle=>"middle",
         types::server=>"server",
         types::client=>"client",
     );

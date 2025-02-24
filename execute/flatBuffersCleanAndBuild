@@ -18,10 +18,10 @@ else
     echo "No .fbs files found in ${SOURCE_DIR}"
     return
 fi
-. $SCRIPT_DIR/flatBuffersClean.sh $NAME_SPACE
-. $SCRIPT_DIR/flatBuffersBuild.sh $NAME_SPACE --php
-. $SCRIPT_DIR/flatBuffersBuild.sh $NAME_SPACE --cpp
-. $SCRIPT_DIR/flatBuffersBuild.sh $NAME_SPACE --ts
+. $SCRIPT_DIR/flatBuffersClean $NAME_SPACE
+. $SCRIPT_DIR/flatBuffersBuild $NAME_SPACE --php
+. $SCRIPT_DIR/flatBuffersBuild $NAME_SPACE --cpp
+. $SCRIPT_DIR/flatBuffersBuild $NAME_SPACE --ts
 if [ -d $SCRIPT_DIR/../output/$NAME_SPACE ]; then
     tree $SCRIPT_DIR/../output/$NAME_SPACE --filelimit 10
 else

@@ -1,0 +1,9 @@
+include "peer.fbs";
+namespace MRD;
+table MiddleMan {
+    servers:[Peer];
+    clients:[Peer];
+}
+root_type MiddleMan;
+file_identifier "MRDE";
+file_extension "mrd";

@@ -1,5 +1,0 @@
-namespace MRD;
-enum types:byte {middle=0,server=1,client=2}
-
-file_identifier "MRD3";
-file_extension "mrd3";

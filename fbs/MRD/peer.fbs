@@ -1,0 +1,10 @@
+include "enums.fbs";
+include "device.fbs";
+namespace MRD;
+table Peer {
+    type:types;
+    device:Device;
+}
+root_type Peer;
+file_identifier "MRDE";
+file_extension "mrd";

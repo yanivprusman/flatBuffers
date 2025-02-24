@@ -1,0 +1,8 @@
+namespace MRD;
+table Device {
+    name:string;
+    pass_word:string;
+}
+root_type Device;
+file_identifier "MRDE";
+file_extension "mrd";
