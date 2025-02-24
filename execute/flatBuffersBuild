@@ -14,7 +14,7 @@ FLAT_BUFFERS_DIR=$SCRIPT_DIR/..
 OUT_PUT_DIR=$FLAT_BUFFERS_DIR/output
 SOURCE_DIR=$FLAT_BUFFERS_DIR/fbs/$NAME_SPACE
 SOURCE_FILES=$SOURCE_DIR/*.fbs
-JS_BUILDER_DIR=$FLAT_BUFFERS_DIR/jsEsCommonBuilderFromTs
+JS_BUILDER_DIR=$FLAT_BUFFERS_DIR/buildJs
 if [ -d "${SOURCE_DIR}" ] && compgen -G "${SOURCE_DIR}" >/dev/null; then
     :
 else
@@ -26,14 +26,49 @@ EXTENSION=$FORMAT_WITHOUT_DASHES
 OUT_PUT_DIR=$OUT_PUT_DIR/$NAME_SPACE/$EXTENSION
 mkdir -p $OUT_PUT_DIR
 if [ $FORMAT_WITHOUT_DASHES = ts ]; then
-    flatc --ts -o $OUT_PUT_DIR $SOURCE_FILES #dont add flags yet(the same as not ts format)
+    flatc --ts -o $OUT_PUT_DIR $SOURCE_FILES #dont add flags yet(the same as not ts format) keep this structure for future changes to flatc for ts
     rm -rf "$JS_BUILDER_DIR/ts"
+    NAME_SPACE_KEBAB_CASE=$(echo "$NAME_SPACE" | sed -E 's/([a-z])([A-Z])/\1-\2/g' | tr '[:upper:]' '[:lower:]' | tr '_' '-' | tr ' ' '-' | tr -s '-' | sed 's/[^a-z0-9-]//g')
+    cat > "$JS_BUILDER_DIR/package.json" << EOF
+{
+  "name": "flatbuffers-${NAME_SPACE_KEBAB_CASE}",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc && esbuild dist/${NAME_SPACE}/${NAME_SPACE}.js --bundle --minify --global-name=${NAME_SPACE} --outfile=dist/${NAME_SPACE}/${NAME_SPACE}.min.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.1",
+    "typescript": "^5.0.0"
+  }
+}
+EOF
+cat > "$JS_BUILDER_DIR/tsconfig.json" << EOF
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "flatbuffers": ["/home/yaniv/101_coding/flatBuffersSoftware/js"]
+    },
+    "outDir": "./dist",
+    "rootDir": "./ts"
+  },
+  "include": ["ts/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
+EOF
+    # npx tsc
     cp -r $OUT_PUT_DIR $JS_BUILDER_DIR
-    . $SCRIPT_DIR/packageJsonConfig.sh $NAME_SPACE
-    npm run build --prefix $JS_BUILDER_DIR
-    cp $JS_BUILDER_DIR/js/*.min.js $OUT_PUT_DIR/
+    npx tsc -p ${JS_BUILDER_DIR}
+    npx esbuild ${JS_BUILDER_DIR}/dist/${NAME_SPACE_KEBAB_CASE}/sample.js --bundle --minify --global-name=${NAME_SPACE} --outfile=${JS_BUILDER_DIR}/dist/${NAME_SPACE}/${NAME_SPACE}.min.js
     DOCS_DIR=$FLAT_BUFFERS_DIR/docs
-    cp $JS_BUILDER_DIR/js/*.min.js $DOCS_DIR/
 else
     flatc $FORMAT -o $OUT_PUT_DIR $SOURCE_FILES
 fi

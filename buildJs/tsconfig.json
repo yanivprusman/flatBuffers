@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2016",
-    "module": "es2015",  
+    "module": "es2015",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -11,9 +11,9 @@
     "paths": {
       "flatbuffers": ["/home/yaniv/101_coding/flatBuffersSoftware/js"]
     },
-    "outDir": "./dist",  
-    "rootDir": "../ts"   
+    "outDir": "./dist",
+    "rootDir": "./ts"
   },
-  "include": ["../ts/**/*"],
+  "include": ["ts/**/*"],
   "exclude": ["node_modules", "dist"]
 }

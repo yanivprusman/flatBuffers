@@ -2,7 +2,8 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
-export enum types {
-  server = 0,
-  client = 1
+export enum Color {
+  Red = 0,
+  Green = 1,
+  Blue = 2
 }

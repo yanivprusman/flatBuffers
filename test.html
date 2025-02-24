@@ -1,0 +1,34 @@
+<script src="https://cdn.jsdelivr.net/npm/flatbuffers@25.2.10/js/flatbuffers.min.js"></script>
+<script src="/home/yaniv/101_coding/flatBuffers/buildJs/dist/MyGame/MyGame.min.js"></script>
+<div id="content"></div>
+<script>
+function doIt() {
+    let builder = new flatbuffers.Builder(1024);
+    // First create ALL strings
+    const weaponOne = builder.createString('Sword');
+    const weaponTwo = builder.createString('Axe');
+
+    // THEN create the first weapon
+    let Weapon=MyGame.Weapon;
+    Weapon.startWeapon(builder);
+    Weapon.addName(builder, weaponOne);
+    Weapon.addDamage(builder, 3);
+    const sword = Weapon.endWeapon(builder);
+
+    // THEN create the second weapon
+    Weapon.startWeapon(builder);
+    Weapon.addName(builder, weaponTwo);
+    Weapon.addDamage(builder, 5);
+    const axe = Weapon.endWeapon(builder); 
+    
+    // var weaponOne = builder.createString('Sword');
+    // var weaponTwo = builder.createString('Axe');
+    // MyGame.Sample.Weapon.startWeapon(builder);
+    // MyGame.Sample.Weapon.addName(builder, weaponOne);
+    // MyGame.Sample.Weapon.addDamage(builder, 3);
+    // var sword = MyGame.Sample.Weapon.endWeapon(builder);
+    // document.getElementById('content').innerHTML = `
+        // `;
+}
+doIt();
+</script> 

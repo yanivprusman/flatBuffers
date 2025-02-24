@@ -1,0 +1,12 @@
+{
+  "name": "flatbuffers-my-game",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc && esbuild dist/MyGame/MyGame.js --bundle --minify --global-name=MyGame --outfile=dist/MyGame/MyGame.min.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.1",
+    "typescript": "^5.0.0"
+  }
+}
